@@ -37,76 +37,72 @@ class _MyHourSelectorState extends State<MyHourSelector>
   final double itemExtent = 50.0;
   final int initialHour = 12;
   bool isVisible = true; // Estado para controlar la visibilidad de la lista
-  final ValueNotifier<bool> openHourPicker = ValueNotifier<bool>(false);
   late AnimationController _animationController;
 
   @override
   void initState() {
     super.initState();
     // scrollController.jumpTo(itemExtent * initialHour);
-    _animationController =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 100));
+    _animationController = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 100));
   }
 
   @override
   Widget build(BuildContext context) {
+    final ValueNotifier<bool> openHourPicker = ValueNotifier<bool>(false);
+
     return Scaffold(
       appBar: AppBar(
-        title: Text('Hour Selector'),
+        title: const Text('Hour Selector'),
       ),
       body: Column(
         children: [
-          ElevatedButton(
-            onPressed: () {
-              // Cambiar el estado para mostrar/ocultar la lista
-              setState(() {
-                isVisible = !isVisible;
-              });
-            },
-            child: Text('Show/Hide Hour Selector'),
-          ),
+          ValueListenableBuilder(
+              valueListenable: openHourPicker,
+              builder: (context, value, child) {
+                return ElevatedButton(
+                  onPressed: () {
+                    openHourPicker.value = !openHourPicker.value;
+                    print(value);
+                    // Cambiar el estado para mostrar/ocultar la lista
+                  },
+                  child: const Text('Show/Hide Hour Selector'),
+                );
+              }),
           // Lista de horas (se muestra si isVisible es verdadero)
           ValueListenableBuilder(
               valueListenable: openHourPicker,
               builder: (context, value, child) {
-                return GestureDetector(
-                  onTap: () {
-                    openHourPicker.value = !openHourPicker.value;
-                    print(openHourPicker.value);
-                  },
-                  child: AnimatedContainer(
-                      duration: Duration(milliseconds: 100),
-                      curve: Curves.bounceIn,
-                      width: 50,
-                      height: openHourPicker.value
-                          ? lerpDouble(0, 150, _animationController.value)
-                          : 0,
-                      decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey),
-                          borderRadius: BorderRadius.circular(10),
-                          color: Colors.white,
-                          boxShadow: const [
-                            BoxShadow(
-                                blurRadius: 50,
-                                blurStyle: BlurStyle.inner,
-                                color: Colors.grey,
-                                offset: Offset(0, 0),
-                                spreadRadius: 2)
-                          ]),
-                      child: ListView(
-                        children: List.generate(
-                            24,
-                            (index) => GestureDetector(
-                                onTap: () {
-                                  print(index);
-                                },
-                                child: Center(
-                                    child: Padding(
-                                  padding: const EdgeInsets.only(top: 20),
-                                  child: Text('$index:00'),
-                                )))),
-                      )),
-                );
+                return AnimatedContainer(
+                    duration: const Duration(milliseconds: 100),
+                    curve: Curves.bounceIn,
+                    width: 50,
+                    height: openHourPicker.value ? 150 : 0,
+                    decoration: BoxDecoration(
+                        border: Border.all(color: Colors.grey),
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.white,
+                        boxShadow: const [
+                          BoxShadow(
+                              blurRadius: 50,
+                              blurStyle: BlurStyle.inner,
+                              color: Colors.grey,
+                              offset: Offset(0, 0),
+                              spreadRadius: 2)
+                        ]),
+                    child: ListView(
+                      children: List.generate(
+                          24,
+                          (index) => GestureDetector(
+                              onTap: () {
+                                print(index);
+                              },
+                              child: Center(
+                                  child: Padding(
+                                padding: const EdgeInsets.only(top: 20),
+                                child: Text('$index:00'),
+                              )))),
+                    ));
               }),
         ],
       ),
