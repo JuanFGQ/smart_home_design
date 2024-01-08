@@ -130,17 +130,18 @@ class _MyHourSelectorState extends State<MyHourSelector>
               // width: 50,
               height: openHourPicker.value ? 150 : 0,
               decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey),
-                  borderRadius: BorderRadius.circular(10),
-                  color: Colors.white,
-                  boxShadow: const [
-                    BoxShadow(
-                        blurRadius: 10,
-                        blurStyle: BlurStyle.inner,
-                        color: Colors.grey,
-                        offset: Offset(0, 0),
-                        spreadRadius: 2)
-                  ]),
+                border: Border.all(color: Colors.grey),
+                borderRadius: BorderRadius.circular(10),
+                color: Colors.white,
+                // boxShadow: const [
+                //   BoxShadow(
+                //       blurRadius: 10,
+                //       blurStyle: BlurStyle.inner,
+                //       color: Colors.grey,
+                //       offset: Offset(0, 0),
+                //       spreadRadius: 2)
+                // ],
+              ),
               child: ValueListenableBuilder(
                 valueListenable: hourText,
                 builder: (context, value, child) {
