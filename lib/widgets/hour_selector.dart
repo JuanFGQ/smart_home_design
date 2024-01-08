@@ -8,35 +8,81 @@ class MyHourSelector extends StatefulWidget {
 class _MyHourSelectorState extends State<MyHourSelector>
     with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
+  final ValueNotifier<bool> openHourPicker = ValueNotifier<bool>(false);
+  final focusNode = FocusNode();
+
+  //
+  final layerLink = LayerLink();
+  OverlayEntry? entry;
 
   @override
   void initState() {
     super.initState();
-    // scrollController.jumpTo(itemExtent * initialHour);
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) => showOverlay());
+
     _animationController = AnimationController(
         vsync: this, duration: const Duration(milliseconds: 100));
+
+    focusNode.addListener(() {
+      if (focusNode.hasFocus) {
+        showOverlay();
+      } else {
+        hideOverLay();
+      }
+    });
+  }
+
+  void showOverlay() {
+    final overlay = Overlay.of(context);
+
+    final renderBox = context.findRenderObject() as RenderBox;
+
+    final size = renderBox.size;
+
+    //test parameter
+    //*final offset = renderBox.localToGlobal(Offset.zero);
+    //
+    entry = OverlayEntry(
+        builder: (context) => Positioned(
+
+            //this parameters was added only to see this overlay with testing purpose
+            //*bottom: offset.dx + size.height + 10,
+            //* left: offset.dy,
+            //
+            width: size.width,
+            child: CompositedTransformFollower(
+                link: layerLink,
+                showWhenUnlinked: false,
+                offset: Offset(0, size.height + 8),
+                child: _CustomHourPicker(openHourPicker: openHourPicker))));
+
+    overlay.insert(entry!);
+  }
+
+  void hideOverLay() {
+    entry?.remove();
+    entry = null;
   }
 
   @override
   Widget build(BuildContext context) {
-    final ValueNotifier<bool> openHourPicker = ValueNotifier<bool>(false);
-
     return Container(
       width: 50,
-      // height: 50,
-      // color: Colors.red,
       child: Stack(
         children: [
-          _ToogleButton(openHourPicker: openHourPicker),
-          _customHourPicker(openHourPicker: openHourPicker),
+          _ToogleButton(
+            openHourPicker: openHourPicker,
+            layerLink: layerLink,
+          ),
+          _CustomHourPicker(openHourPicker: openHourPicker),
         ],
       ),
     );
   }
 }
 
-class _customHourPicker extends StatelessWidget {
-  const _customHourPicker({
+class _CustomHourPicker extends StatelessWidget {
+  const _CustomHourPicker({
     super.key,
     required this.openHourPicker,
   });
@@ -90,24 +136,29 @@ class _ToogleButton extends StatelessWidget {
   const _ToogleButton({
     super.key,
     required this.openHourPicker,
+    this.layerLink,
   });
 
   final ValueNotifier<bool> openHourPicker;
+  final LayerLink? layerLink;
 
   @override
   Widget build(BuildContext context) {
-    return ValueListenableBuilder(
-        valueListenable: openHourPicker,
-        builder: (context, value, child) {
-          return MaterialButton(
-            elevation: 3,
-            onPressed: () {
-              openHourPicker.value = !openHourPicker.value;
-              print(value);
-              // Cambiar el estado para mostrar/ocultar la lista
-            },
-            child: const Icon(Icons.arrow_drop_down_circle_outlined),
-          );
-        });
+    return CompositedTransformTarget(
+      link: layerLink!,
+      child: ValueListenableBuilder(
+          valueListenable: openHourPicker,
+          builder: (context, value, child) {
+            return MaterialButton(
+              elevation: 3,
+              onPressed: () {
+                openHourPicker.value = !openHourPicker.value;
+                print(value);
+                // Cambiar el estado para mostrar/ocultar la lista
+              },
+              child: const Icon(Icons.arrow_drop_down_circle_outlined),
+            );
+          }),
+    );
   }
 }

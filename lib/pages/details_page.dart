@@ -197,11 +197,6 @@ class _SchedulePicker extends StatelessWidget {
           //     onPressed: onpressed,
           //     icon: const Icon(Icons.keyboard_arrow_down_outlined))
 
-          PopupMenuButton(
-            itemBuilder: (context) {
-              return [PopupMenuItem(child: )];
-            },
-          )
           // MyHourSelector()
         ],
       ),
