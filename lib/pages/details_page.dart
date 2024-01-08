@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 import 'package:smart_home_design/widgets/available_button.dart';
+import 'package:smart_home_design/widgets/hour_selector.dart';
 
 final ValueNotifier<double> valueNotifier = ValueNotifier<double>(0.0);
 
@@ -101,7 +102,7 @@ class _LeftControlls extends StatelessWidget {
                     style: TextStyle(fontSize: 20, color: Colors.grey)),
                 Container(
                   // color: Colors.red,
-                  height: MediaQuery.of(context).size.height * 0.4,
+                  height: MediaQuery.of(context).size.height * 0.32,
                   width: 80,
                   child: ValueListenableBuilder(
                       valueListenable: valueNotifier,
@@ -192,9 +193,16 @@ class _SchedulePicker extends StatelessWidget {
                   fontSize: 20,
                   color: Colors.black,
                   fontWeight: FontWeight.bold)),
-          IconButton(
-              onPressed: onpressed,
-              icon: const Icon(Icons.keyboard_arrow_down_outlined))
+          // IconButton(
+          //     onPressed: onpressed,
+          //     icon: const Icon(Icons.keyboard_arrow_down_outlined))
+
+          PopupMenuButton(
+            itemBuilder: (context) {
+              return [PopupMenuItem(child: )];
+            },
+          )
+          // MyHourSelector()
         ],
       ),
     );
