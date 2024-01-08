@@ -18,41 +18,33 @@ class DetailsPage extends StatelessWidget {
         children: [
           Row(
             children: [
-              _LeftControlls(
-                size: size,
-                valueNotifier: valueNotifier,
-              ),
-              _Lamps(
-                size: size,
-                valueNotifier: valueNotifier,
-              ),
+              _LeftControlls(size: size, valueNotifier: valueNotifier),
+              _Lamps(size: size, valueNotifier: valueNotifier),
             ],
           ),
-          Expanded(
-              child: Container(
-                  color: Colors.yellow,
-                  child: const Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+          const SizedBox(
+              width: double.infinity,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(left: 10, top: 10),
+                    child: Text('Schedule',
+                        style: TextStyle(
+                            fontSize: 25,
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold)),
+                  ),
+                  Row(
                     children: [
-                      Padding(
-                        padding: EdgeInsets.only(left: 10, top: 10),
-                        child: Text('Schedule',
-                            style: TextStyle(
-                                fontSize: 25,
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold)),
-                      ),
-                      Row(
-                        children: [
-                          _SchedulePicker(text: 'From'),
-                          SizedBox(
-                            width: 20,
-                          ),
-                          _SchedulePicker(text: 'To'),
-                        ],
-                      )
+                      SizedBox(width: 40),
+                      MyHourSelector(text: 'From', showHour: '3:00'),
+                      SizedBox(width: 40),
+                      MyHourSelector(text: 'To', showHour: '19:00'),
                     ],
-                  ))),
+                  )
+                ],
+              )),
         ],
       ),
     );
@@ -99,7 +91,8 @@ class _LeftControlls extends StatelessWidget {
             Column(
               children: [
                 const Text('Hight',
-                    style: TextStyle(fontSize: 20, color: Colors.grey)),
+                    style: TextStyle(
+                        fontSize: 20, color: Color.fromARGB(255, 67, 67, 67))),
                 Container(
                   // color: Colors.red,
                   height: MediaQuery.of(context).size.height * 0.32,
@@ -111,6 +104,10 @@ class _LeftControlls extends StatelessWidget {
                         return RotatedBox(
                           quarterTurns: 3,
                           child: Slider(
+                            inactiveColor:
+                                const Color.fromARGB(169, 158, 158, 158),
+                            activeColor: const Color(0xffad903a),
+                            thumbColor: const Color.fromARGB(255, 221, 188, 1),
                             value: value,
                             onChanged: (value) {
                               valueNotifier.value = value;
@@ -122,7 +119,8 @@ class _LeftControlls extends StatelessWidget {
                       }),
                 ),
                 const Text('Low',
-                    style: TextStyle(fontSize: 20, color: Colors.grey)),
+                    style: TextStyle(
+                        fontSize: 20, color: Color.fromARGB(255, 67, 67, 67))),
               ],
             )
           ],
@@ -183,10 +181,7 @@ class _SchedulePicker extends StatelessWidget {
       padding: const EdgeInsets.only(left: 15, top: 20),
       child: Row(
         children: [
-          Text(
-            text,
-            style: const TextStyle(color: Colors.grey),
-          ),
+          Text(text, style: const TextStyle(color: Colors.grey)),
           const SizedBox(width: 8),
           const Text('12:00',
               style: TextStyle(

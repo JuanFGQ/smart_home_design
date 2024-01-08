@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 
 class MyHourSelector extends StatefulWidget {
+  final String text;
+  final String showHour;
+
+  const MyHourSelector({super.key, required this.text, required this.showHour});
+
   @override
   _MyHourSelectorState createState() => _MyHourSelectorState();
 }
@@ -8,7 +13,10 @@ class MyHourSelector extends StatefulWidget {
 class _MyHourSelectorState extends State<MyHourSelector>
     with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
+  late TextEditingController _textController;
   final ValueNotifier<bool> openHourPicker = ValueNotifier<bool>(false);
+  final ValueNotifier<String> hourText = ValueNotifier<String>('');
+
   final focusNode = FocusNode();
 
   //
@@ -19,6 +27,8 @@ class _MyHourSelectorState extends State<MyHourSelector>
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) => showOverlay());
+
+    _textController = TextEditingController();
 
     _animationController = AnimationController(
         vsync: this, duration: const Duration(milliseconds: 100));
@@ -40,21 +50,20 @@ class _MyHourSelectorState extends State<MyHourSelector>
     final size = renderBox.size;
 
     //test parameter
-    //*final offset = renderBox.localToGlobal(Offset.zero);
-    //
+    /*
+    the offset allows me to know the position of the widget and then 
+    positioning the widget according to it 
+    */
+    // final offset = renderBox.localToGlobal(Offset.zero);
+
     entry = OverlayEntry(
         builder: (context) => Positioned(
-
-            //this parameters was added only to see this overlay with testing purpose
-            //*bottom: offset.dx + size.height + 10,
-            //* left: offset.dy,
-            //
-            width: size.width,
+            width: 60,
             child: CompositedTransformFollower(
                 link: layerLink,
                 showWhenUnlinked: false,
-                offset: Offset(0, size.height + 8),
-                child: _CustomHourPicker(openHourPicker: openHourPicker))));
+                offset: Offset(10, size.height - 150),
+                child: buildOverlay())));
 
     overlay.insert(entry!);
   }
@@ -65,100 +74,103 @@ class _MyHourSelectorState extends State<MyHourSelector>
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 50,
-      child: Stack(
-        children: [
-          _ToogleButton(
-            openHourPicker: openHourPicker,
-            layerLink: layerLink,
-          ),
-          _CustomHourPicker(openHourPicker: openHourPicker),
-        ],
-      ),
-    );
-  }
-}
+  Widget build(BuildContext context) => Container(
+        height: 50,
+        child: Row(
+          children: [
+            Text(widget.text, style: const TextStyle(color: Colors.grey)),
+            const SizedBox(width: 8),
+            ValueListenableBuilder(
+                valueListenable: hourText,
+                builder: (context, value, child) {
+                  return Text(
+                      hourText.value.isEmpty ? widget.showHour : hourText.value,
+                      style: const TextStyle(
+                          fontSize: 20,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold));
+                }),
+            SizedBox(
+              width: 50,
+              child: CompositedTransformTarget(
+                link: layerLink,
+                child: ValueListenableBuilder(
+                    valueListenable: openHourPicker,
+                    builder: (context, value, child) {
+                      return MaterialButton(
+                        elevation: 3,
+                        onPressed: () {
+                          openHourPicker.value = !openHourPicker.value;
 
-class _CustomHourPicker extends StatelessWidget {
-  const _CustomHourPicker({
-    super.key,
-    required this.openHourPicker,
-  });
+                          if (openHourPicker.value == true) {
+                            showOverlay();
+                          } else {
+                            hideOverLay();
+                          }
 
-  final ValueNotifier<bool> openHourPicker;
+                          // Cambiar el estado para mostrar/ocultar la lista
+                        },
+                        child:
+                            const Icon(Icons.arrow_drop_down_circle_outlined),
+                      );
+                    }),
+              ),
+            )
+          ],
+        ),
+      );
 
-  @override
-  Widget build(BuildContext context) {
-    return ValueListenableBuilder(
-        valueListenable: openHourPicker,
-        builder: (context, value, child) {
-          return Positioned(
-            top: 40,
-            child: AnimatedContainer(
-                duration: const Duration(milliseconds: 100),
-                curve: Curves.decelerate,
-                width: 50,
-                height: openHourPicker.value ? 150 : 0,
-                decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey),
-                    borderRadius: BorderRadius.circular(10),
-                    color: Colors.white,
-                    boxShadow: const [
-                      BoxShadow(
-                          blurRadius: 10,
-                          blurStyle: BlurStyle.inner,
-                          color: Colors.grey,
-                          offset: Offset(0, 0),
-                          spreadRadius: 2)
-                    ]),
-                child: ListView(
-                  children: List.generate(
-                      24,
-                      (index) => GestureDetector(
-                          onTap: () {
-                            print('INDEX $index');
-                            openHourPicker.value = false;
-                          },
-                          child: Center(
-                              child: Padding(
-                            padding: const EdgeInsets.only(top: 20),
-                            child: Text('$index:00'),
-                          )))),
-                )),
-          );
-        });
-  }
-}
-
-class _ToogleButton extends StatelessWidget {
-  const _ToogleButton({
-    super.key,
-    required this.openHourPicker,
-    this.layerLink,
-  });
-
-  final ValueNotifier<bool> openHourPicker;
-  final LayerLink? layerLink;
-
-  @override
-  Widget build(BuildContext context) {
-    return CompositedTransformTarget(
-      link: layerLink!,
-      child: ValueListenableBuilder(
+  Widget buildOverlay() => Material(
+        child: ValueListenableBuilder(
           valueListenable: openHourPicker,
           builder: (context, value, child) {
-            return MaterialButton(
-              elevation: 3,
-              onPressed: () {
-                openHourPicker.value = !openHourPicker.value;
-                print(value);
-                // Cambiar el estado para mostrar/ocultar la lista
-              },
-              child: const Icon(Icons.arrow_drop_down_circle_outlined),
+            return AnimatedContainer(
+              duration: const Duration(milliseconds: 100),
+              curve: Curves.bounceIn,
+              // width: 50,
+              height: openHourPicker.value ? 150 : 0,
+              decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey),
+                  borderRadius: BorderRadius.circular(10),
+                  color: Colors.white,
+                  boxShadow: const [
+                    BoxShadow(
+                        blurRadius: 10,
+                        blurStyle: BlurStyle.inner,
+                        color: Colors.grey,
+                        offset: Offset(0, 0),
+                        spreadRadius: 2)
+                  ]),
+              child: ValueListenableBuilder(
+                valueListenable: hourText,
+                builder: (context, value, child) {
+                  return ListView(
+                    children: List.generate(
+                      24,
+                      (index) => GestureDetector(
+                        onTap: () {
+                          print('INDEX $index');
+                          hourText.value = '$index:00';
+                          openHourPicker.value = false;
+                          hideOverLay();
+                        },
+                        child: Center(
+                          child: Padding(
+                            padding: const EdgeInsets.only(bottom: 20),
+                            child: Text(
+                              '$index:00',
+                              style: const TextStyle(
+                                  color: Colors.black, fontSize: 15),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
             );
-          }),
-    );
-  }
+          },
+        ),
+      );
 }
