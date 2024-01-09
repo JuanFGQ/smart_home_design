@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 class AvailableButton extends StatefulWidget {
+  final Color backGroundColor;
   final bool initialValue;
   final ValueChanged<bool>? onChanged;
 
@@ -10,6 +11,7 @@ class AvailableButton extends StatefulWidget {
     super.key,
     required this.initialValue,
     this.onChanged,
+    required this.backGroundColor,
   });
   @override
   State<AvailableButton> createState() => _AvailableButtonState();
@@ -88,7 +90,7 @@ class _AvailableButtonState extends State<AvailableButton>
               height: 30,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
-                  color: Colors.white,
+                  color: widget.backGroundColor,
                   boxShadow: [
                     BoxShadow(
                       blurRadius: blur,

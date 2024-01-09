@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:smart_home_design/constants.dart';
 
 class MyHourSelector extends StatefulWidget {
   final String text;
@@ -78,7 +79,9 @@ class _MyHourSelectorState extends State<MyHourSelector>
         height: 50,
         child: Row(
           children: [
-            Text(widget.text, style: const TextStyle(color: Colors.grey)),
+            Text(widget.text,
+                style: const TextStyle(
+                    color: Colors.grey, fontWeight: FontWeight.bold)),
             const SizedBox(width: 8),
             ValueListenableBuilder(
                 valueListenable: hourText,
@@ -87,7 +90,7 @@ class _MyHourSelectorState extends State<MyHourSelector>
                       hourText.value.isEmpty ? widget.showHour : hourText.value,
                       style: const TextStyle(
                           fontSize: 20,
-                          color: Colors.black,
+                          color: primaryWordsColor,
                           fontWeight: FontWeight.bold));
                 }),
             SizedBox(
@@ -133,14 +136,6 @@ class _MyHourSelectorState extends State<MyHourSelector>
                 border: Border.all(color: Colors.grey),
                 borderRadius: BorderRadius.circular(10),
                 color: Colors.white,
-                // boxShadow: const [
-                //   BoxShadow(
-                //       blurRadius: 10,
-                //       blurStyle: BlurStyle.inner,
-                //       color: Colors.grey,
-                //       offset: Offset(0, 0),
-                //       spreadRadius: 2)
-                // ],
               ),
               child: ValueListenableBuilder(
                 valueListenable: hourText,
