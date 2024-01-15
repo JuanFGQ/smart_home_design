@@ -1,25 +1,12 @@
-// import 'dart:math';
-
-// import 'package:flutter/material.dart';
-// import 'package:sleek_circular_slider/sleek_circular_slider.dart';
-// import 'package:smart_home_design/pages/details_page.dart';
-
-// void main() => runApp(const MyApp());
-
-// class MyApp extends StatelessWidget {
-//   const MyApp({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//         title: 'Material App', home: Scaffold(body: DetailsPage()));
-//   }
-// }
-
-// This can help you get an idea on how to do it.
-
 import 'package:flutter/material.dart';
-import 'package:smart_home_design/pages/details_page.dart';
+import 'package:provider/provider.dart';
+import 'package:smart_home_design/smart%20home%201/pages/details_page.dart';
+import 'package:smart_home_design/smart%20home%201/pages/home_page.dart';
+import 'package:smart_home_design/smart%20home%201/widgets/available_button.dart';
+import 'package:smart_home_design/smart%20home%201/widgets/custom_switch.dart';
+import 'package:smart_home_design/smart_home2/pages/details2.dart';
+import 'package:smart_home_design/smart_home2/pages/home2.dart';
+import 'package:smart_home_design/smart_home2/provider/provider.dart';
 
 void main() {
   runApp(MyApp());
@@ -28,6 +15,16 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: DetailsPage());
+    return MultiProvider(
+      providers: [ChangeNotifierProvider(create: (_) => Model())],
+      child: const MaterialApp(
+          debugShowCheckedModeBanner: false,
+          home: Scaffold(
+            backgroundColor: Color(0xff1f1f1f),
+            body: Center(child: Home2()
+                // Details2(zoneName: 'Living Room', connectedDevices: '7'),
+                ),
+          )),
+    );
   }
 }

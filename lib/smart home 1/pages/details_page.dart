@@ -1,16 +1,18 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:sleek_circular_slider/sleek_circular_slider.dart';
-import 'package:smart_home_design/constants.dart';
-import 'package:smart_home_design/widgets/available_button.dart';
-import 'package:smart_home_design/widgets/color_slider.dart';
-import 'package:smart_home_design/widgets/hour_selector.dart';
+import 'package:smart_home_design/smart%20home%201/constants.dart';
+import 'package:smart_home_design/smart%20home%201/widgets/available_button.dart';
+import 'package:smart_home_design/smart%20home%201/widgets/color_slider.dart';
+import 'package:smart_home_design/smart%20home%201/widgets/hour_selector.dart';
 
 final ValueNotifier<double> valueNotifier = ValueNotifier<double>(0.0);
 
 class DetailsPage extends StatelessWidget {
-  const DetailsPage({super.key});
+  final String applianceName;
+  final String image;
+  const DetailsPage(
+      {super.key, required this.applianceName, required this.image});
 
   @override
   Widget build(BuildContext context) {
@@ -21,8 +23,16 @@ class DetailsPage extends StatelessWidget {
         children: [
           Row(
             children: [
-              _LeftControlls(size: size, valueNotifier: valueNotifier),
-              _Lamps(size: size, valueNotifier: valueNotifier),
+              _LeftControlls(
+                size: size,
+                valueNotifier: valueNotifier,
+                applianceName: applianceName,
+              ),
+              _ApplianceImage(
+                size: size,
+                valueNotifier: valueNotifier,
+                image: image,
+              ),
             ],
           ),
           _ScheduleAndSliderColor(size: size),
@@ -78,10 +88,12 @@ class _ScheduleAndSliderColor extends StatelessWidget {
 }
 
 class _LeftControlls extends StatelessWidget {
+  final String applianceName;
   const _LeftControlls({
     super.key,
     required this.size,
     required this.valueNotifier,
+    required this.applianceName,
   });
 
   final Size size;
@@ -89,7 +101,8 @@ class _LeftControlls extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return Container(
+        // color: Colors.amber,
         width: size.width * 0.5,
         height: size.height * 0.75,
         child: Column(
@@ -104,19 +117,21 @@ class _LeftControlls extends StatelessWidget {
             Container(
                 margin: const EdgeInsets.only(
                     left: 15, top: 10, bottom: 10, right: 10),
-                child: const Text(
-                  'Smart Light',
+                child: Text(
+                  applianceName,
                   style: TextStyle(
-                      fontSize: 20,
+                      fontSize: size.height * 0.03,
                       fontWeight: FontWeight.bold,
                       color: primaryWordsColor),
                 )),
             const Padding(
-                padding: EdgeInsets.only(left: 15, top: 10, bottom: 10),
-                child: AvailableButton(
-                  initialValue: true,
-                  backGroundColor: switchBackGroundColor,
-                )),
+              padding: EdgeInsets.only(left: 15, top: 10, bottom: 10),
+              child: AvailableButton(
+                quarterTurns: 4,
+                initialValue: false,
+                backGroundColor: switchBackGroundColor,
+              ),
+            ),
             const SizedBox(height: 60),
             Column(
               children: [
@@ -163,11 +178,13 @@ class _LeftControlls extends StatelessWidget {
   }
 }
 
-class _Lamps extends StatelessWidget {
-  const _Lamps({
+class _ApplianceImage extends StatelessWidget {
+  final String image;
+  const _ApplianceImage({
     super.key,
     required this.size,
     required this.valueNotifier,
+    required this.image,
   });
 
   final Size size;
@@ -175,14 +192,21 @@ class _Lamps extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return Container(
       width: size.width * 0.5,
-      height: size.height * 0.75,
+      height: size.height * 0.60,
       // color: Colors.blue,
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Image(image: AssetImage('assets/lamp3.png')),
+          Expanded(
+              child: Image(
+            image: AssetImage('assets/$image.png'),
+            filterQuality: FilterQuality.high,
+            alignment: Alignment.center,
+          )),
           const SizedBox(height: 30),
+          // Spacer(),
           Column(
             children: [
               ValueListenableBuilder(
@@ -197,7 +221,7 @@ class _Lamps extends StatelessWidget {
                             fontSize: 46,
                             fontWeight: FontWeight.normal));
                   }),
-              const Text('Brightness',
+              const Text('Power',
                   style: TextStyle(
                       fontSize: 23,
                       fontWeight: FontWeight.bold,
