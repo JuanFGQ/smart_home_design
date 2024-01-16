@@ -36,13 +36,33 @@ class _LightsCardState extends State<LightsCard> {
       margin: EdgeInsets.all(15),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20), color: Colors.black12),
-      child: Row(
-        // mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Column(
         children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+          Row(
+            // mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // Column(
+              //   mainAxisAlignment: MainAxisAlignment.spaceAround,
+              //   children: [
+              //     Switch(
+              //       value: _isActiveDevice,
+              //       onChanged: (value) {
+              //         setState(() {
+              //           _isActiveDevice = !_isActiveDevice;
+              //           value = _isActiveDevice;
+              //         });
+              //       },
+              //     ),
+              //     Padding(
+              //       padding: const EdgeInsets.all(8.0),
+              //       child: Text(
+              //         'Main light',
+              //         style: TextStyle(fontSize: size.height * 0.02),
+              //       ),
+              //     )
+              //   ],
+              // ),
               Switch(
                 value: _isActiveDevice,
                 onChanged: (value) {
@@ -52,16 +72,17 @@ class _LightsCardState extends State<LightsCard> {
                   });
                 },
               ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  'Main light',
-                  style: TextStyle(fontSize: size.height * 0.02),
-                ),
-              )
+              Expanded(child: Image(image: AssetImage('assets/lamp.png'))),
             ],
           ),
-          Expanded(child: Image(image: AssetImage('assets/lamp.png'))),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              'Main light',
+              style: TextStyle(fontSize: size.height * 0.02),
+            ),
+          ),
+          Slider(value: value, onChanged: onChanged)
         ],
       ),
     );
