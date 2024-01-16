@@ -6,44 +6,49 @@ class CustomSlider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SleekCircularSlider(
-      appearance: CircularSliderAppearance(
-        size: MediaQuery.of(context).size.width * 0.6,
-        customColors: CustomSliderColors(
-          trackColor: Colors.grey.shade300,
-          progressBarColor: Colors.blue,
-          dotColor: Colors.blue,
-          shadowColor: Colors.grey.shade600,
+    return Container(
+      width: double.infinity,
+      height: MediaQuery.of(context).size.height * 0.25,
+      // color: Colors.red,
+      child: SleekCircularSlider(
+        appearance: CircularSliderAppearance(
+          size: MediaQuery.of(context).size.width * 0.5,
+          customColors: CustomSliderColors(
+            trackColor: Colors.grey.shade300,
+            progressBarColor: Colors.blue,
+            dotColor: Colors.blue,
+            shadowColor: Colors.grey.shade600,
+          ),
+          customWidths: CustomSliderWidths(
+            trackWidth: 8,
+            progressBarWidth: 5,
+            handlerSize: 10,
+          ),
         ),
-        customWidths: CustomSliderWidths(
-          trackWidth: 8,
-          progressBarWidth: 5,
-          handlerSize: 10,
-        ),
+        min: 0,
+        max: 30,
+        initialValue: 15,
+        onChange: (value) => {},
+        innerWidget: (double value) {
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              // Spacer(),
+              Text(
+                '${value.round()}º',
+                style: const TextStyle(
+                    color: Colors.blue,
+                    fontSize: 42,
+                    fontWeight: FontWeight.w600),
+              ),
+              Text(
+                'Current 21ºC',
+                style: TextStyle(color: Colors.grey, fontSize: 16),
+              ),
+            ],
+          );
+        },
       ),
-      min: 0,
-      max: 30,
-      initialValue: 15,
-      onChange: (value) => {},
-      innerWidget: (double value) {
-        return Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            // Spacer(),
-            Text(
-              '${value.round()}º',
-              style: const TextStyle(
-                  color: Colors.blue,
-                  fontSize: 42,
-                  fontWeight: FontWeight.w600),
-            ),
-            Text(
-              'Current 21ºC',
-              style: TextStyle(color: Colors.grey, fontSize: 16),
-            ),
-          ],
-        );
-      },
     );
   }
 }
