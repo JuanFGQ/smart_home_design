@@ -5,8 +5,8 @@ import 'package:smart_home_design/smart%20home%201/widgets/home_options_button.d
 import 'package:smart_home_design/smart_home2/pages/home2.dart';
 import 'package:smart_home_design/smart_home2/pages/sub%20pages/air_conditioner.dart';
 import 'package:smart_home_design/smart_home2/pages/sub%20pages/camera_sub_page.dart';
-import 'package:smart_home_design/smart_home2/pages/sub%20pages/devices.dart';
-import 'package:smart_home_design/smart_home2/pages/sub%20pages/lights.dart';
+import 'package:smart_home_design/smart_home2/pages/sub%20pages/devices_sub_page.dart';
+import 'package:smart_home_design/smart_home2/pages/sub%20pages/lights_sub_page.dart';
 import 'package:smart_home_design/smart_home2/provider/provider.dart';
 import 'package:smart_home_design/smart_home2/widgets/custom_appbar.dart';
 
@@ -34,7 +34,7 @@ class Details2 extends StatelessWidget {
               child: IndexedStack(index: index.getIndex, children: [
                 AirConditioner(),
                 CamerasSubPage(zoneName: zoneName),
-                Lights(),
+                LightsSubPage(),
                 Devices(),
               ]),
             )
@@ -85,7 +85,6 @@ class _CustomAppBar extends StatelessWidget {
       )),
       trailingWidget: MaterialButton(
         color: Colors.white,
-        // height: 40,
         shape:
             const CircleBorder(side: BorderSide(width: 1, color: Colors.white)),
         onPressed: () {},

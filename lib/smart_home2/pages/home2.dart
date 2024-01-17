@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:smart_home_design/smart_home2/constants2.dart';
 import 'package:smart_home_design/smart_home2/widgets/weather_card.dart';
 import 'package:smart_home_design/smart_home2/widgets/zones_card.dart';
 
@@ -34,7 +35,8 @@ class Home2 extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(height: 50),
+            _UserGretting(),
+            SizedBox(height: size.height * 0.02),
             const Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
@@ -72,6 +74,60 @@ class Home2 extends StatelessWidget {
           ],
         ),
       )),
+    );
+  }
+}
+
+class _UserGretting extends StatelessWidget {
+  const _UserGretting({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+
+    return Container(
+      // color: Colors.green,
+      margin: EdgeInsets.all(15),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Column(
+            // mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Hi MobileX',
+                style: TextStyle(
+                    fontSize: size.height * 0.038,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black),
+              ),
+              Text(
+                'Welcome to your smart home',
+                style: TextStyle(
+                    fontSize: size.height * 0.018,
+                    fontWeight: FontWeight.bold,
+                    color: const Color.fromARGB(255, 120, 120, 120)),
+              )
+            ],
+          ),
+          MaterialButton(
+            minWidth: 70,
+            height: 40,
+            elevation: 1,
+            // minWidth: ,
+            onPressed: () {},
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+            color: colorBlueSea,
+            child: const Text(
+              '+   Add',
+              style:
+                  TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+            ),
+          )
+        ],
+      ),
     );
   }
 }
