@@ -5,8 +5,18 @@ import 'package:smart_home_design/smart_home2/widgets/zones_card.dart';
 
 import '../widgets/custom_appbar.dart';
 
-class Home2 extends StatelessWidget {
+class Home2 extends StatefulWidget {
   const Home2({super.key});
+
+  @override
+  State<Home2> createState() => _Home2State();
+}
+
+class _Home2State extends State<Home2> {
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -14,66 +24,117 @@ class Home2 extends StatelessWidget {
     return Scaffold(
       backgroundColor: const Color.fromARGB(233, 255, 255, 255),
       body: SafeArea(
-          child: SingleChildScrollView(
-        child: Column(
-          children: [
-            const CustomAppBar(
-              leadingIcon: Icons.grid_view_outlined,
-              text: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(Icons.circle, color: Colors.green, size: 15),
-                  SizedBox(width: 5),
-                  Text('15 Devices Running')
-                ],
-              ),
-              trailingWidget: Padding(
-                padding: EdgeInsets.only(right: 15),
-                child: CircleAvatar(
-                  radius: 22,
-                  backgroundImage: AssetImage('assets/logo.png'),
-                ),
-              ),
-            ),
-            _UserGretting(),
-            SizedBox(height: size.height * 0.02),
-            const Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                WeatherCard(
-                  temp: 'Temperature',
-                  weather: '29ºC',
-                  icon: Icons.thermostat_outlined,
-                ),
-                WeatherCard(
-                  temp: 'Humidity',
-                  weather: '72%',
-                  icon: Icons.water_drop_outlined,
-                ),
-                WeatherCard(
-                  temp: 'CO2',
-                  weather: '602 PPM',
-                  icon: Icons.cloud_queue,
-                ),
-              ],
-            ),
-            SizedBox(height: size.height * 0.04),
+          child: CustomScrollView(
+        slivers: [
+          const _CustomAppBar(),
+          _Grettins(size: size),
+
+          _WeatherCard(size: size),
+
+          SliverList(
+              delegate: SliverChildListDelegate([
             ListView.builder(
-              shrinkWrap: true,
-              itemCount: 1,
-              itemBuilder: (context, index) {
-                return const ZonesCard(
-                  humidity: '63',
-                  temp: '26',
-                  devicesConnected: false,
-                  zoneName: 'Living Room',
-                  quantityDevices: '10',
-                );
-              },
-            )
-          ],
-        ),
+                primary: false,
+                shrinkWrap: true,
+                itemCount: cards.length,
+                itemBuilder: (context, index) => cards[index])
+          ])),
+          // const SliverAppBar(),
+        ],
       )),
+    );
+  }
+}
+
+class _Grettins extends StatelessWidget {
+  const _Grettins({
+    super.key,
+    required this.size,
+  });
+
+  final Size size;
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverAppBar(
+      bottom:
+          PreferredSize(child: SizedBox(), preferredSize: Size.fromHeight(30)),
+      pinned: true,
+      backgroundColor: Colors.white,
+      expandedHeight: size.height * 0.105,
+      flexibleSpace: Column(
+        children: [const _UserGretting()],
+      ),
+    );
+  }
+}
+
+class _WeatherCard extends StatelessWidget {
+  const _WeatherCard({
+    super.key,
+    required this.size,
+  });
+
+  final Size size;
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverAppBar(
+        expandedHeight: size.height * 0.16,
+        backgroundColor: Colors.white,
+        floating: true,
+        // ignore: prefer_const_constructors
+        flexibleSpace: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: const Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              WeatherCard(
+                temp: 'Temperature',
+                weather: '29ºC',
+                icon: Icons.thermostat_outlined,
+              ),
+              WeatherCard(
+                temp: 'Humidity',
+                weather: '72%',
+                icon: Icons.water_drop_outlined,
+              ),
+              WeatherCard(
+                temp: 'CO2',
+                weather: '602 PPM',
+                icon: Icons.cloud_queue,
+              ),
+            ],
+          ),
+        ));
+  }
+}
+
+class _CustomAppBar extends StatelessWidget {
+  const _CustomAppBar({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+
+    return SliverAppBar(
+      backgroundColor: Colors.white,
+      expandedHeight: size.height * 0.05,
+      floating: true,
+      leading: IconButton(
+          icon: const Icon(
+            Icons.grid_view,
+            color: Colors.black,
+          ),
+          onPressed: () {}),
+      centerTitle: true,
+      title: const Text('15 devices Active'),
+      actions: const [
+        CircleAvatar(
+          radius: 22,
+          backgroundImage: AssetImage('assets/logo.png'),
+        ),
+      ],
     );
   }
 }
@@ -86,8 +147,7 @@ class _UserGretting extends StatelessWidget {
     final size = MediaQuery.of(context).size;
 
     return Container(
-      // color: Colors.green,
-      margin: EdgeInsets.all(15),
+      margin: const EdgeInsets.all(15),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -115,7 +175,6 @@ class _UserGretting extends StatelessWidget {
             minWidth: 70,
             height: 40,
             elevation: 1,
-            // minWidth: ,
             onPressed: () {},
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
@@ -131,3 +190,5 @@ class _UserGretting extends StatelessWidget {
     );
   }
 }
+
+//   

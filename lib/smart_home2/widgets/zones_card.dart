@@ -9,15 +9,15 @@ class ZonesCard extends StatelessWidget {
   final String quantityDevices;
   final String temp;
   final String humidity;
-  final bool devicesConnected;
+  final String image;
 
   const ZonesCard(
       {super.key,
       required this.zoneName,
       required this.quantityDevices,
-      required this.devicesConnected,
       required this.temp,
-      required this.humidity});
+      required this.humidity,
+      required this.image});
 
   @override
   Widget build(BuildContext context) {
@@ -42,9 +42,9 @@ class ZonesCard extends StatelessWidget {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(20),
-              child: const Image(
+              child: Image(
                 filterQuality: FilterQuality.low,
-                image: AssetImage('assets/livingR.png'),
+                image: AssetImage('assets/$image.png'),
                 fit: BoxFit.fill,
               ),
             ),

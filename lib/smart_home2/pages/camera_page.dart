@@ -14,7 +14,7 @@ class CameraPage extends StatelessWidget {
     final size = MediaQuery.of(context).size;
 
     return Scaffold(
-      backgroundColor: Color(0xff1f1f1f),
+      backgroundColor: const Color(0xff1f1f1f),
       body: Column(
         children: [
           Hero(
@@ -39,31 +39,31 @@ class CameraPage extends StatelessWidget {
                   height: size.height * 0.16,
                   child: FloatingActionButton(
                       onPressed: () {},
+                      backgroundColor: Colors.black,
                       child: Icon(Icons.camera_alt_outlined,
-                          size: size.height * 0.04, color: Colors.white),
-                      backgroundColor: Colors.black),
+                          size: size.height * 0.04, color: Colors.white)),
                 ),
-                SizedBox(width: 15),
+                const SizedBox(width: 15),
                 SizedBox(
                   width: size.width * 0.2,
                   height: size.height * 0.2,
                   child: FloatingActionButton(
                     onPressed: () {},
+                    backgroundColor: const Color.fromARGB(255, 104, 241, 108),
                     child: Icon(Icons.mic_none_rounded,
                         size: size.height * 0.04, color: Colors.black),
-                    backgroundColor: const Color.fromARGB(255, 104, 241, 108),
                   ),
                 ),
-                SizedBox(width: 15),
+                const SizedBox(width: 15),
                 SizedBox(
                   width: size.width * 0.16,
                   height: size.height * 0.16,
                   child: FloatingActionButton(
                     mini: false,
                     onPressed: () {},
+                    backgroundColor: Colors.black,
                     child: Icon(Icons.volume_down_outlined,
                         size: size.height * 0.04, color: Colors.white),
-                    backgroundColor: Colors.black,
                   ),
                 )
               ],

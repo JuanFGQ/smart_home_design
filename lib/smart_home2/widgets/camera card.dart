@@ -23,11 +23,13 @@ class CameraCard extends StatelessWidget {
     final size = MediaQuery.of(context).size;
     return GestureDetector(
       onTap: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => CameraPage(zoneName: zoneName),
-            ));
+        if (!visible) {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => CameraPage(zoneName: zoneName),
+              ));
+        }
       },
       child: Container(
         margin: EdgeInsets.all(marginValue),
