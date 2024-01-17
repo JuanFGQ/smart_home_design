@@ -32,10 +32,10 @@ class Details2 extends StatelessWidget {
             _TabBarButton(size: size),
             Expanded(
               child: IndexedStack(index: index.getIndex, children: [
-                AirConditioner(),
+                const AirConditioner(),
                 CamerasSubPage(zoneName: zoneName),
                 LightsSubPage(),
-                Devices(),
+                const Devices(),
               ]),
             )
           ],
@@ -105,7 +105,7 @@ class _TabBarButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(10),
+      margin: const EdgeInsets.all(10),
       // color: Colors.red,
       width: double.infinity,
       height: size.height * 0.15,
