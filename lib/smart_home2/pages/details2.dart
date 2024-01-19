@@ -30,7 +30,7 @@ class Details2 extends StatelessWidget {
                 zoneName: zoneName,
                 size: size),
             _TabBarButton(size: size),
-            Expanded(
+            Flexible(
               child: IndexedStack(index: index.getIndex, children: [
                 const AirConditioner(),
                 CamerasSubPage(zoneName: zoneName),
