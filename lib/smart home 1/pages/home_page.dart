@@ -6,7 +6,7 @@ import 'package:smart_home_design/smart%20home%201/pages/details_page.dart';
 import 'package:smart_home_design/smart%20home%201/widgets/home_appliance_card.dart';
 
 import '../widgets/home_options_button.dart';
-import '../widgets/side_drawer.dart';
+import '../../smart_home2/widgets/side_drawer.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -14,7 +14,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: const SideDrawer(),
+      // drawer: const SideDrawer(),
       backgroundColor: backGroundColor,
       appBar: AppBar(
         elevation: 0,
@@ -22,9 +22,7 @@ class HomePage extends StatelessWidget {
         leading: Builder(builder: (context) {
           return IconButton(
             color: Colors.black,
-            onPressed: () {
-              Scaffold.of(context).openDrawer();
-            },
+            onPressed: () {},
             icon: Icon(Icons.menu),
           );
         }),

@@ -6,9 +6,6 @@ class CameraPage extends StatelessWidget {
 
   const CameraPage({super.key, required this.zoneName});
 
-  // final String image;
-  // const CameraPage({super.key, required this.image});
-
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -17,18 +14,12 @@ class CameraPage extends StatelessWidget {
       backgroundColor: const Color(0xff1f1f1f),
       body: Column(
         children: [
-          Hero(
-            tag: 'tag$zoneName',
-            child: CameraCard(
-              visible: true,
-              marginValue: 5,
-              radius: BorderRadius.circular(20),
-              // radius: BorderRadius.only(
-              //     bottomLeft: Radius.circular(20),
-              //     bottomRight: Radius.circular(20)),
-              zoneName: zoneName,
-              sizeMultiplier: 0.8,
-            ),
+          CameraCard(
+            visible: true,
+            marginValue: 5,
+            radius: BorderRadius.circular(20),
+            zoneName: zoneName,
+            sizeMultiplier: 0.8,
           ),
           Expanded(
             child: Row(
@@ -38,6 +29,7 @@ class CameraPage extends StatelessWidget {
                   width: size.width * 0.16,
                   height: size.height * 0.16,
                   child: FloatingActionButton(
+                      heroTag: 'TAG2$zoneName',
                       onPressed: () {},
                       backgroundColor: Colors.black,
                       child: Icon(Icons.camera_alt_outlined,
@@ -48,6 +40,7 @@ class CameraPage extends StatelessWidget {
                   width: size.width * 0.2,
                   height: size.height * 0.2,
                   child: FloatingActionButton(
+                    heroTag: 'TAG$zoneName',
                     onPressed: () {},
                     backgroundColor: const Color.fromARGB(255, 104, 241, 108),
                     child: Icon(Icons.mic_none_rounded,
@@ -59,6 +52,7 @@ class CameraPage extends StatelessWidget {
                   width: size.width * 0.16,
                   height: size.height * 0.16,
                   child: FloatingActionButton(
+                    heroTag: 'TAG3$zoneName',
                     mini: false,
                     onPressed: () {},
                     backgroundColor: Colors.black,

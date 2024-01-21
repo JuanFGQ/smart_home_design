@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_home_design/smart%20home%201/constants.dart';
 import 'package:smart_home_design/smart%20home%201/widgets/home_options_button.dart';
+import 'package:smart_home_design/smart_home2/data/scenarios_data.dart';
 import 'package:smart_home_design/smart_home2/pages/home2.dart';
 import 'package:smart_home_design/smart_home2/pages/sub%20pages/air_conditioner.dart';
 import 'package:smart_home_design/smart_home2/pages/sub%20pages/camera_sub_page.dart';
@@ -11,11 +12,11 @@ import 'package:smart_home_design/smart_home2/provider/provider.dart';
 import 'package:smart_home_design/smart_home2/widgets/custom_appbar.dart';
 
 class Details2 extends StatelessWidget {
-  final String zoneName;
-  final String connectedDevices;
-  // final String image;
-  const Details2(
-      {super.key, required this.zoneName, required this.connectedDevices});
+  final ScenariosData data;
+  const Details2({
+    super.key,
+    required this.data,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -26,16 +27,22 @@ class Details2 extends StatelessWidget {
         child: Column(
           children: [
             _CustomAppBar(
-                connectedDevices: connectedDevices,
-                zoneName: zoneName,
+                connectedDevices: data.activeDevices,
+                zoneName: data.zoneName,
                 size: size),
             _TabBarButton(size: size),
-            Flexible(
+            const Divider(endIndent: 40, indent: 40, thickness: 1),
+            Expanded(
               child: IndexedStack(index: index.getIndex, children: [
-                const AirConditioner(),
-                CamerasSubPage(zoneName: zoneName),
+                AirConditioner(
+                    currentTemp: data.acUnitInfo?.currentTemp.toString() ?? '0',
+                    isActiveUnit: data.acUnitInfo?.isActiveUnit ?? false,
+                    mode: data.acUnitInfo?.unitMode ?? 'Cold',
+                    temp: data.acUnitInfo?.currentTemp ?? 0,
+                    zoneName: data.zoneName),
+                CamerasSubPage(zoneName: data.zoneName),
                 LightsSubPage(),
-                const Devices(),
+                const Devices()
               ]),
             )
           ],

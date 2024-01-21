@@ -56,14 +56,13 @@ class CameraCard extends StatelessWidget {
               bottom: 8,
               left: 10,
               child: Container(
-                // color: Colors.red,
                 child: Row(
                   children: [
                     const _CameraIcon(),
                     const SizedBox(width: 10),
                     Column(
                       children: [
-                        Text(
+                        const Text(
                           'Camera 2',
                           style: TextStyle(
                               // fontSize: size.height * 0.022,
@@ -118,8 +117,8 @@ class CameraCard extends StatelessWidget {
                   onPressed: () {
                     Navigator.pop(context);
                   },
-                  shape: CircleBorder(),
-                  child: Icon(
+                  shape: const CircleBorder(),
+                  child: const Icon(
                     Icons.arrow_back,
                     color: Colors.white38,
                   ),
@@ -135,8 +134,8 @@ class CameraCard extends StatelessWidget {
                   color: const Color.fromARGB(147, 158, 158, 158),
                   height: 40,
                   onPressed: () {},
-                  shape: CircleBorder(),
-                  child: Icon(
+                  shape: const CircleBorder(),
+                  child: const Icon(
                     Icons.settings,
                     color: Colors.white38,
                   ),
@@ -156,7 +155,7 @@ class _CameraIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(10),
+      padding: const EdgeInsets.all(10),
       // width: 50,
       // height: 50,
       decoration: BoxDecoration(

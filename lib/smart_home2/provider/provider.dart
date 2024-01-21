@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 class Model with ChangeNotifier {
   int _index = 0;
+  bool _activeLamp = false;
 
   int get getIndex => _index;
 
@@ -11,11 +12,9 @@ class Model with ChangeNotifier {
     notifyListeners();
   }
 
-  String _switchArg = "off";
-
-  String get switchArg => _switchArg;
-  set switchArg(String value) {
-    _switchArg = value;
+  bool get activeLamp => _activeLamp;
+  set activeLamp(bool value) {
+    _activeLamp = value;
     notifyListeners();
   }
 

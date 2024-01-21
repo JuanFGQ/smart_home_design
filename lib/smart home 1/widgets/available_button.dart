@@ -43,8 +43,6 @@ class _AvailableButtonState extends State<AvailableButton>
         vsync: this, duration: const Duration(milliseconds: 300));
 
     _moveRight = Tween(begin: 0.0, end: 60.0 - 30.0);
-
-    // _rotate = Tween<double>(begin: 0.0, end: pi * 2);
   }
 
   void toggleButton() {
@@ -91,8 +89,7 @@ class _AvailableButtonState extends State<AvailableButton>
             height: 30,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
-                color:
-                    !isActiveButton ? componentsColor : const Color(0xffd3d3d3),
+                color: !isActiveButton ? Colors.grey : widget.backGroundColor,
                 boxShadow: [
                   BoxShadow(
                     blurRadius: blur,

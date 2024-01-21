@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 
 class CustomSlider extends StatelessWidget {
-  const CustomSlider({super.key});
+  final double initialValue;
+  final String currentTemp;
+  const CustomSlider(
+      {super.key, required this.initialValue, required this.currentTemp});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +30,7 @@ class CustomSlider extends StatelessWidget {
         ),
         min: 0,
         max: 30,
-        initialValue: 15,
+        initialValue: initialValue,
         onChange: (value) => {},
         innerWidget: (double value) {
           return Column(
@@ -42,7 +45,7 @@ class CustomSlider extends StatelessWidget {
                     fontWeight: FontWeight.w600),
               ),
               Text(
-                'Current 21ºC',
+                'Current $currentTempºC',
                 style: TextStyle(color: Colors.grey, fontSize: 16),
               ),
             ],

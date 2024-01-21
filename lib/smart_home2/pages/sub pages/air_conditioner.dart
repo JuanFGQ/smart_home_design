@@ -1,11 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 import 'package:smart_home_design/smart%20home%201/widgets/google_home_clone.dart';
+import 'package:smart_home_design/smart_home2/widgets/ac_mode_card.dart';
 
 import '../../widgets/custom_slider.dart';
 
 class AirConditioner extends StatelessWidget {
-  const AirConditioner({super.key});
+  final String mode;
+  final String zoneName;
+
+  final String currentTemp;
+  final bool isActiveUnit;
+  final double temp;
+
+  const AirConditioner(
+      {super.key,
+      required this.mode,
+      required this.currentTemp,
+      required this.temp,
+      required this.zoneName,
+      required this.isActiveUnit});
 
   @override
   Widget build(BuildContext context) {
@@ -14,12 +29,58 @@ class AirConditioner extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
-          const _PowerScheduleButtons(),
-          SizedBox(height: size.height * 0.07),
-          const _Slider(),
           const Spacer(),
-          const _FanSpeed(),
-          const _ConditionerModes()
+          _Slider(initialValue: temp, currentTemp: currentTemp),
+          Column(
+            children: [
+              Text(
+                'Mode',
+                style: TextStyle(
+                    fontWeight: FontWeight.normal,
+                    color: Colors.grey,
+                    fontSize: size.height * 0.018),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Text(
+                mode,
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                    fontSize: size.height * 0.025),
+              ),
+            ],
+          ),
+          const Spacer(),
+          const Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              AcModeCard(iconData: Icons.ac_unit, mode: 'COLD'),
+              AcModeCard(iconData: FontAwesomeIcons.fan, mode: 'FAN'),
+              AcModeCard(iconData: Icons.water_drop_outlined, mode: 'DRY'),
+            ],
+          ),
+          const Spacer(),
+          Container(
+            decoration: const BoxDecoration(
+                shape: BoxShape.circle,
+                gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Color(0xff60a5fe),
+                      Color(0xff78cafc),
+                      Color(0xffa4e3ef),
+                    ])),
+            child: FloatingActionButton.large(
+                heroTag: '$zoneName',
+                elevation: 0,
+                onPressed: () {},
+                child: const Icon(Icons.power_settings_new_rounded, size: 50),
+                backgroundColor: Colors.transparent),
+          ),
+          const Spacer(),
         ],
       ),
     );
@@ -27,82 +88,19 @@ class AirConditioner extends StatelessWidget {
 }
 
 class _Slider extends StatelessWidget {
+  final double initialValue;
+  final String currentTemp;
   const _Slider({
     super.key,
+    required this.initialValue,
+    required this.currentTemp,
   });
 
   @override
   Widget build(BuildContext context) {
-    return const CustomSlider();
-  }
-}
-
-class _PowerScheduleButtons extends StatelessWidget {
-  const _PowerScheduleButtons({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        MaterialButton(
-          height: 50,
-          shape: const CircleBorder(),
-          color: Colors.green,
-          onPressed: () {},
-          // ignore: prefer_const_constructors
-          child: Icon(
-            Icons.power_settings_new,
-            color: Colors.white,
-          ),
-        ),
-        MaterialButton(
-          height: 50,
-          shape: const CircleBorder(),
-          color: Colors.white,
-          onPressed: () {},
-          // ignore: prefer_const_constructors
-          child: Icon(
-            Icons.alarm,
-            color: Colors.grey,
-          ),
-        )
-      ],
-    );
-  }
-}
-
-class _FanSpeed extends StatelessWidget {
-  const _FanSpeed({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
-
-    return Container(
-      margin: const EdgeInsets.all(15),
-      width: double.infinity,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text('Fan Speed',
-              style: TextStyle(
-                  fontWeight: FontWeight.bold, fontSize: size.height * 0.022)),
-          Row(
-            children: List.generate(
-                6,
-                (index) => Container(
-                      margin: const EdgeInsets.only(top: 20, left: 5),
-                      width: 50,
-                      height: 20,
-                      color: Colors.blue,
-                    )),
-          )
-        ],
-      ),
+    return CustomSlider(
+      currentTemp: currentTemp,
+      initialValue: initialValue,
     );
   }
 }

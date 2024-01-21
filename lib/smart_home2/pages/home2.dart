@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:smart_home_design/smart_home2/constants2.dart';
+import 'package:smart_home_design/smart_home2/data/scenarios_data.dart';
+import 'package:smart_home_design/smart_home2/pages/details2.dart';
+import 'package:smart_home_design/smart_home2/widgets/side_drawer.dart';
 import 'package:smart_home_design/smart_home2/widgets/weather_card.dart';
 import 'package:smart_home_design/smart_home2/widgets/zones_card.dart';
 
@@ -14,17 +17,12 @@ class Home2 extends StatefulWidget {
 
 class _Home2State extends State<Home2> {
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Scaffold(
+      drawer: const SideDrawer(),
       backgroundColor: const Color.fromARGB(233, 255, 255, 255),
-      body: SafeArea(
-          child: CustomScrollView(
+      body: CustomScrollView(
         slivers: [
           const _CustomAppBar(),
           _Grettins(size: size),
@@ -36,12 +34,13 @@ class _Home2State extends State<Home2> {
             ListView.builder(
                 primary: false,
                 shrinkWrap: true,
-                itemCount: cards.length,
-                itemBuilder: (context, index) => cards[index])
+                itemCount: scenariosData.length,
+                itemBuilder: (context, index) =>
+                    Details2(data: scenariosData[index]))
           ])),
           // const SliverAppBar(),
         ],
-      )),
+      ),
     );
   }
 }
@@ -57,13 +56,15 @@ class _Grettins extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
-      bottom:
-          PreferredSize(child: SizedBox(), preferredSize: Size.fromHeight(30)),
+      // bottom:
+      //     PreferredSize(child: SizedBox(), preferredSize: Size.fromHeight(32)),
       pinned: true,
       backgroundColor: Colors.white,
-      expandedHeight: size.height * 0.105,
-      flexibleSpace: Column(
-        children: [const _UserGretting()],
+      // expandedHeight: size.height * 0.105,
+      flexibleSpace: const Column(
+        children: [
+          _UserGretting(),
+        ],
       ),
     );
   }
@@ -126,13 +127,18 @@ class _CustomAppBar extends StatelessWidget {
             Icons.grid_view,
             color: Colors.black,
           ),
-          onPressed: () {}),
+          onPressed: () {
+            Scaffold.of(context).openDrawer();
+          }),
       centerTitle: true,
       title: const Text('15 devices Active'),
       actions: const [
-        CircleAvatar(
-          radius: 22,
-          backgroundImage: AssetImage('assets/logo.png'),
+        Padding(
+          padding: EdgeInsets.all(8.0),
+          child: CircleAvatar(
+            radius: 22,
+            backgroundImage: AssetImage('assets/logo.png'),
+          ),
         ),
       ],
     );
