@@ -1,23 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:smart_home_design/smart_home2/data/scenarios_data.dart';
 import 'package:smart_home_design/smart_home2/pages/details2.dart';
 import 'package:smart_home_design/smart_home2/pages/sub%20pages/camera_sub_page.dart';
 import 'package:smart_home_design/smart_home2/provider/provider.dart';
 
 class ZonesCard extends StatelessWidget {
-  final String zoneName;
-  final String quantityDevices;
-  final String temp;
-  final String humidity;
-  final String image;
+  // final String zoneName;
+  // final String quantityDevices;
+  // final String temp;
+  // final String humidity;
+  // final String image;
 
-  const ZonesCard(
-      {super.key,
-      required this.zoneName,
-      required this.quantityDevices,
-      required this.temp,
-      required this.humidity,
-      required this.image});
+  // const ZonesCard(
+  //     {super.key,
+  //     required this.zoneName,
+  //     required this.quantityDevices,
+  //     required this.temp,
+  //     required this.humidity,
+  //     required this.image});
+  final ScenariosData data;
+
+  const ZonesCard({super.key, required this.data});
 
   @override
   Widget build(BuildContext context) {
@@ -25,11 +29,8 @@ class ZonesCard extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         final index = Provider.of<Model>(context, listen: false);
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => Details2(
-                    zoneName: zoneName, connectedDevices: quantityDevices)));
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => Details2(data: data)));
         index.getIndex = 0;
       },
       child: Container(
@@ -44,20 +45,20 @@ class ZonesCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(20),
               child: Image(
                 filterQuality: FilterQuality.low,
-                image: AssetImage('assets/$image.png'),
+                image: AssetImage('assets/${data.image}.png'),
                 fit: BoxFit.fill,
               ),
             ),
             Container(
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
-                  color: Color.fromARGB(74, 50, 50, 50)),
+                  color: const Color.fromARGB(74, 50, 50, 50)),
             ),
             Positioned(
               top: 8,
               left: 10,
               child: Text(
-                zoneName,
+                data.zoneName,
                 style: TextStyle(
                     fontSize: size.height * 0.035,
                     color: Colors.white70,
@@ -70,14 +71,14 @@ class ZonesCard extends StatelessWidget {
               child: IconButton(
                   onPressed: () {
                     final camera = Provider.of<Model>(context, listen: false);
+                    camera.getIndex = 1;
+
                     Navigator.push(
                         context,
                         MaterialPageRoute(
                             builder: (context) => Details2(
-                                zoneName: zoneName,
-                                connectedDevices: quantityDevices)));
-
-                    camera.getIndex = 1;
+                                  data: data,
+                                )));
                   },
                   icon: Icon(
                     Icons.videocam,
@@ -91,9 +92,9 @@ class ZonesCard extends StatelessWidget {
               right: 0,
               child: _InfoBox(
                 size: size,
-                activeDevices: quantityDevices,
-                humidity: humidity,
-                temp: temp,
+                activeDevices: data.activeDevices,
+                humidity: '26',
+                temp: '15',
               ),
             ),
           ],
@@ -110,8 +111,7 @@ class _InfoBox extends StatelessWidget {
   final Size size;
 
   const _InfoBox(
-      {super.key,
-      required this.temp,
+      {required this.temp,
       required this.humidity,
       required this.activeDevices,
       required this.size});
@@ -119,7 +119,7 @@ class _InfoBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(left: 10, right: 10),
+      margin: const EdgeInsets.only(left: 10, right: 10),
       height: 50,
       width: 200,
       // color: Colors.grey,
@@ -151,63 +151,21 @@ class _InfoBox extends StatelessWidget {
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
                   fontSize: size.height * 0.02)),
-          SizedBox(width: 5),
+          const SizedBox(width: 5),
           Text('Humidity',
               style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
                   fontSize: size.height * 0.02)),
-          Spacer(),
+          const Spacer(),
           Text('$activeDevices  Devices active',
               style: TextStyle(
                   color: Colors.greenAccent[100],
                   fontWeight: FontWeight.bold,
                   fontSize: size.height * 0.02)),
-          SizedBox(width: 10),
+          const SizedBox(width: 10),
         ],
       ),
     );
   }
 }
-
-
-//  Column(
-//         // crossAxisAlignment: CrossAxisAlignment.start,
-//         children: [
-//           Expanded(
-//             child: ClipRRect(
-//               borderRadius: BorderRadius.circular(20),
-//               child: Image(image: AssetImage('assets/living.jpg')),
-//             ),
-//           ),
-//           Container(
-//             margin: EdgeInsets.only(left: 10, top: 10),
-//             // color: Colors.blue,
-//             child: Column(
-//               // mainAxisAlignment: MainAxisAlignment.start,
-//               children: [
-//                 Align(
-//                   alignment: Alignment.bottomLeft,
-//                   child: Text(zoneName,
-//                       style: TextStyle(
-//                           fontSize: size.height * 0.025,
-//                           fontWeight: FontWeight.bold)),
-//                 ),
-//                 SizedBox(height: 10),
-//                 Row(
-//                   children: [
-//                     Icon(Icons.circle,
-//                         size: 15,
-//                         color: devicesConnected ? Colors.grey : Colors.grey),
-//                     SizedBox(width: 10),
-//                     Text(
-//                       '$quantityDevices Devices',
-//                       style: const TextStyle(color: Colors.grey),
-//                     )
-//                   ],
-//                 )
-//               ],
-//             ),
-//           ),
-//         ],
-//       ),

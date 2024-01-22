@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:smart_home_design/smart_home2/data/scenarios_data.dart';
 import 'package:smart_home_design/smart_home2/widgets/camera%20card.dart';
-import 'package:smart_home_design/smart_home2/widgets/security_card.dart';
+import 'package:smart_home_design/smart_home2/widgets/sensors_card.dart';
 
 class CamerasSubPage extends StatelessWidget {
   final String zoneName;
+  final List<CamerasInfo> cameras;
+  final List<SensorsInfo> sensors;
 
-  const CamerasSubPage({super.key, required this.zoneName});
+  const CamerasSubPage(
+      {super.key,
+      required this.zoneName,
+      required this.cameras,
+      required this.sensors});
 
   @override
   Widget build(BuildContext context) {
@@ -13,36 +20,35 @@ class CamerasSubPage extends StatelessWidget {
 
     return Scaffold(
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
             child: PageView.builder(
-              controller: PageController(viewportFraction: 0.8),
+              itemCount: cameras.length,
+              controller: PageController(viewportFraction: 0.9),
               itemBuilder: (context, index) {
-                return CameraCard(
-                  visible: false,
-                  zoneName: zoneName,
-                  sizeMultiplier: 0.3,
-                  marginValue: 15,
-                  radius: BorderRadius.circular(20),
-                );
+                return CameraCard(cameras: cameras[index]);
               },
             ),
           ),
-          SizedBox(
-            width: size.width * 1,
-            height: size.height * 0.35,
-            child: GridView.builder(
-                scrollDirection: Axis.horizontal,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    mainAxisExtent: 170,
-                    mainAxisSpacing: 1.0,
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 0),
-                itemCount: 4,
-                itemBuilder: (context, index) => const SecurityCard(
-                      image: 'window_closed',
-                      text: 'Windows',
-                    )),
+          Center(
+            child: Text('Sensors',
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: size.height * 0.025)),
+          ),
+          Center(
+            child: SizedBox(
+              // width: size.width * 0.6,
+              height: size.height * 0.2,
+              child: ListView.builder(
+                itemExtent: 80,
+                itemCount: sensors.length,
+                itemBuilder: (context, index) =>
+                    SensorsCard(sensors: sensors[index]),
+              ),
+            ),
           )
         ],
       ),

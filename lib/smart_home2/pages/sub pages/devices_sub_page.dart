@@ -1,30 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:smart_home_design/smart_home2/data/scenarios_data.dart';
+import 'package:smart_home_design/smart_home2/widgets/devices_card.dart';
 
 class Devices extends StatelessWidget {
-  const Devices({super.key});
+  final List<OtherDevicesInfo> devicesInfo;
+  const Devices({super.key, required this.devicesInfo});
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
+    // final size = MediaQuery.of(context).size;
     return Scaffold(
-      body: Center(
-        child: Container(
-            child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text('No devices.\nAdd one!',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    fontSize: size.height * 0.02, color: Colors.grey)),
-            SizedBox(height: 20),
-            FloatingActionButton(
-              onPressed: () {},
-              backgroundColor: Colors.blueAccent,
-              child: Icon(Icons.add_box_outlined),
-            ),
-          ],
-        )),
-      ),
+      body: GridView.builder(
+          scrollDirection: Axis.vertical,
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              mainAxisExtent: 220,
+              mainAxisSpacing: 0.5,
+              crossAxisCount: 2,
+              crossAxisSpacing: 0),
+          itemCount: devicesInfo.length,
+          itemBuilder: (context, index) => DevicesCard(
+                devices: devicesInfo[index],
+              )),
     );
   }
 }

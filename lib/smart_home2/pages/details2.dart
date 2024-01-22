@@ -3,11 +3,11 @@ import 'package:provider/provider.dart';
 import 'package:smart_home_design/smart%20home%201/constants.dart';
 import 'package:smart_home_design/smart%20home%201/widgets/home_options_button.dart';
 import 'package:smart_home_design/smart_home2/data/scenarios_data.dart';
-import 'package:smart_home_design/smart_home2/pages/home2.dart';
 import 'package:smart_home_design/smart_home2/pages/sub%20pages/air_conditioner.dart';
 import 'package:smart_home_design/smart_home2/pages/sub%20pages/camera_sub_page.dart';
 import 'package:smart_home_design/smart_home2/pages/sub%20pages/devices_sub_page.dart';
 import 'package:smart_home_design/smart_home2/pages/sub%20pages/lights_sub_page.dart';
+import 'package:smart_home_design/smart_home2/widgets/header_background.dart';
 import 'package:smart_home_design/smart_home2/provider/provider.dart';
 import 'package:smart_home_design/smart_home2/widgets/custom_appbar.dart';
 
@@ -26,23 +26,32 @@ class Details2 extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            _CustomAppBar(
-                connectedDevices: data.activeDevices,
-                zoneName: data.zoneName,
-                size: size),
-            _TabBarButton(size: size),
+            BackGroundHeader(
+              image: data.image,
+              widget1: _CustomAppBar(
+                  connectedDevices: data.activeDevices,
+                  zoneName: data.zoneName,
+                  size: size),
+              widget2: _TabBarButton(size: size, data: data),
+            ),
             const Divider(endIndent: 40, indent: 40, thickness: 1),
             Expanded(
               child: IndexedStack(index: index.getIndex, children: [
-                AirConditioner(
-                    currentTemp: data.acUnitInfo?.currentTemp.toString() ?? '0',
-                    isActiveUnit: data.acUnitInfo?.isActiveUnit ?? false,
-                    mode: data.acUnitInfo?.unitMode ?? 'Cold',
-                    temp: data.acUnitInfo?.currentTemp ?? 0,
-                    zoneName: data.zoneName),
-                CamerasSubPage(zoneName: data.zoneName),
-                LightsSubPage(),
-                const Devices()
+                if (data.acUnitInfo != null)
+                  AirConditioner(
+                      currentTemp:
+                          data.acUnitInfo?.currentTemp.toString() ?? '0',
+                      isActiveUnit: data.acUnitInfo?.isActiveUnit ?? false,
+                      mode: data.acUnitInfo?.unitMode ?? 'Cold',
+                      temp: data.acUnitInfo?.currentTemp ?? 0,
+                      zoneName: data.zoneName),
+                CamerasSubPage(
+                    zoneName: data.zoneName,
+                    cameras: data.securityInfo,
+                    sensors: data.sensors!),
+                LightsSubPage(lights: data.lightsInfo),
+                if (data.otherDeviceInfo != null)
+                  Devices(devicesInfo: data.otherDeviceInfo!)
               ]),
             )
           ],
@@ -102,9 +111,12 @@ class _CustomAppBar extends StatelessWidget {
 }
 
 class _TabBarButton extends StatelessWidget {
+  final ScenariosData data;
+
   const _TabBarButton({
     super.key,
     required this.size,
+    required this.data,
   });
 
   final Size size;
@@ -113,11 +125,11 @@ class _TabBarButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.all(10),
-      // color: Colors.red,
       width: double.infinity,
       height: size.height * 0.15,
       child: HomeZones(button: [
-        OptionButton(icon: Icons.ac_unit, text: 'AC'),
+        if (data.acUnitInfo != null)
+          OptionButton(icon: Icons.ac_unit, text: 'AC'),
         OptionButton(icon: Icons.videocam_outlined, text: 'Cameras'),
         OptionButton(icon: Icons.light, text: 'Lights'),
         OptionButton(icon: Icons.devices, text: 'devices'),

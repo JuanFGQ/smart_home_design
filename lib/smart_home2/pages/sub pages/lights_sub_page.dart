@@ -1,174 +1,42 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_home_design/smart%20home%201/widgets/available_button.dart';
+import 'package:smart_home_design/smart_home2/data/scenarios_data.dart';
 import 'package:smart_home_design/smart_home2/provider/provider.dart';
 
 class LightsSubPage extends StatelessWidget {
+  final List<LigthsInfo> lights;
+
+  const LightsSubPage({super.key, required this.lights});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body:
-          //     ListView.builder(
-          //   itemBuilder: (context, index) =>
-          //       LightsCard(lampName: 'Kids room', lampImage: 'kidslamp'),
-          // )
-
-          GridView.builder(
-              scrollDirection: Axis.vertical,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  mainAxisExtent: 220,
-                  mainAxisSpacing: 0.5,
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 0),
-              itemCount: 4,
-              itemBuilder: (context, index) => LightsCard(
-                    icon: Icons.light_outlined,
-                    roomName: 'kids room',
-                    deviceName: 'Wall Lamp',
-                  )),
+      body: GridView.builder(
+          scrollDirection: Axis.vertical,
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              mainAxisExtent: 220,
+              mainAxisSpacing: 0.5,
+              crossAxisCount: 2,
+              crossAxisSpacing: 0),
+          itemCount: lights.length,
+          itemBuilder: (context, index) =>
+              LightsCard(lighsInfo: lights[index])),
     );
   }
 }
 
-// class LightsCard extends StatefulWidget {
-//   final String lampName;
-//   final String lampImage;
-
-//   const LightsCard(
-//       {super.key, required this.lampName, required this.lampImage});
-
-//   @override
-//   State<LightsCard> createState() => _LightsCardState();
-// }
-
-// class _LightsCardState extends State<LightsCard> {
-//   bool _isActiveDevice = false;
-//   double _sliderVal = 0;
-//   double _lastValue = 0;
-
-//   @override
-//   Widget build(BuildContext context) {
-//     final size = MediaQuery.of(context).size;
-//     final turnOn = Provider.of<Model>(context);
-
-//     return Container(
-//       width: size.width * 0.5,
-//       height: size.height * 0.2,
-//       margin: const EdgeInsets.all(15),
-//       decoration: BoxDecoration(
-//         border: Border.all(
-//             width: 2, color: _isActiveDevice ? Colors.black : Colors.grey),
-//         borderRadius: BorderRadius.circular(20),
-//         color: _isActiveDevice ? const Color(0xff40bfcf) : Colors.white,
-//       ),
-//       child: Column(
-//         children: [
-//           Container(
-//             // color: Colors.red,
-//             child: Row(
-//               children: [
-//                 Column(
-//                   children: [
-//                     Switch(
-//                       activeColor:
-//                           _isActiveDevice ? Color(0xff00ff57) : Colors.grey,
-//                       inactiveThumbColor: Colors.grey,
-//                       value: _isActiveDevice,
-//                       onChanged: (value) {
-//                         setState(() {
-//                           _isActiveDevice = !_isActiveDevice;
-//                           value = _isActiveDevice;
-//                           turnOn.turnOnDevice(_isActiveDevice ? "on" : "off");
-//                         });
-//                       },
-//                     ),
-//                     const SizedBox(height: 20),
-//                     Text(
-//                       _isActiveDevice
-//                           ? '${(_sliderVal * 100).toStringAsFixed(0)}%'
-//                           : '${(_lastValue * 100).toStringAsFixed(0)}%',
-//                       style: TextStyle(
-//                         fontWeight: FontWeight.bold,
-//                         color: _isActiveDevice ? Colors.white : Colors.grey,
-//                         fontSize: size.height * 0.03,
-//                       ),
-//                     ),
-//                     SizedBox(height: 20),
-//                     Text(
-//                       'Wall Lamp',
-//                       style: TextStyle(
-//                         fontWeight: FontWeight.bold,
-//                         color: _isActiveDevice ? Colors.white : Colors.grey,
-//                         fontSize: size.height * 0.02,
-//                       ),
-//                     ),
-//                   ],
-//                 ),
-//                 // Container(
-//                 //   // color: Colors.green,
-//                 //   child: SizedBox(
-//                 //     width: size.width * 0.19,
-//                 //     height: size.height * 0.19,
-//                 //     child: Image(
-//                 //       filterQuality: FilterQuality.low,
-//                 //       image: AssetImage('assets/${widget.lampImage}.png'),
-//                 //       fit: BoxFit.cover,
-//                 //     ),
-//                 //   ),
-//                 // ),
-//               ],
-//             ),
-//           ),
-//           Flexible(
-//             child: AbsorbPointer(
-//               absorbing: !_isActiveDevice,
-//               child: Slider(
-//                 secondaryActiveColor: Colors.grey,
-//                 inactiveColor: Colors.grey,
-//                 activeColor: _isActiveDevice
-//                     ? const Color.fromARGB(255, 4, 219, 247)
-//                     : Colors.white,
-//                 value: _isActiveDevice ? _sliderVal : 0,
-//                 onChanged: (value) {
-//                   _sliderVal = value;
-//                   _lastValue = _sliderVal;
-//                   setState(() {});
-//                 },
-//               ),
-//             ),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }
-
 class LightsCard extends StatefulWidget {
-  final String deviceName;
-  final bool? ledStripe;
-  final bool? infoDataBool;
+  final LigthsInfo lighsInfo;
 
-  final IconData icon;
-  final String roomName;
-  final String? infoData;
-
-  const LightsCard({
-    super.key,
-    required this.deviceName,
-    this.ledStripe,
-    required this.icon,
-    this.infoData,
-    required this.roomName,
-    this.infoDataBool,
-  });
+  const LightsCard({super.key, required this.lighsInfo});
 
   @override
   State<LightsCard> createState() => _LightsCardState();
 }
 
 class _LightsCardState extends State<LightsCard> {
-  bool _isActiveDevice = false;
-  double _sliderVal = 0;
+  late bool _isActiveDevice = widget.lighsInfo.isActiveLamp;
+  late double _sliderVal = widget.lighsInfo.dimmerValue ?? 0;
   double _lastValue = 0;
 
   @override
@@ -220,26 +88,14 @@ class _LightsCardState extends State<LightsCard> {
                 ),
                 const Spacer(),
                 Visibility(
-                  visible: widget.infoDataBool != null ? true : false,
-                  child: Padding(
-                    padding: const EdgeInsets.only(right: 15),
-                    child: Text(
-                      widget.infoData ?? widget.infoData ?? '',
-                      style: TextStyle(
-                          fontSize: size.height * 0.04,
-                          color: _isActiveDevice ? Colors.white : Colors.black,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                ),
-                Visibility(
-                  visible: widget.ledStripe != null ? true : false,
+                  visible:
+                      widget.lighsInfo.isLedStripeActive != null ? true : false,
                   child: Padding(
                     padding: const EdgeInsets.only(right: 15),
                     child: RotatedBox(
                       quarterTurns: 3,
                       child: AvailableButton(
-                        initialValue: false,
+                        initialValue: _isActiveDevice,
                         backGroundColor: Colors.black,
                         quarterTurns: 1,
                         onChanged: (value) {
@@ -260,9 +116,9 @@ class _LightsCardState extends State<LightsCard> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(widget.deviceName,
+                Text(widget.lighsInfo.lampBrand,
                     style: TextStyle(fontSize: size.height * 0.015)),
-                Text(widget.deviceName,
+                Text(widget.lighsInfo.lampLocation,
                     style: TextStyle(
                         fontSize: size.height * 0.025,
                         fontWeight: FontWeight.bold))
@@ -271,11 +127,11 @@ class _LightsCardState extends State<LightsCard> {
           ),
           const Spacer(),
           Visibility(
-            visible: widget.ledStripe != null ? false : true,
+            visible: widget.lighsInfo.isLedStripeActive != null ? false : true,
             child: Padding(
               padding: const EdgeInsets.only(left: 15, bottom: 20),
               child: AvailableButton(
-                initialValue: false,
+                initialValue: _isActiveDevice,
                 backGroundColor: Colors.black,
                 quarterTurns: 0,
                 onChanged: (value) {
@@ -287,7 +143,7 @@ class _LightsCardState extends State<LightsCard> {
             ),
           ),
           Visibility(
-            visible: widget.ledStripe != null ? true : false,
+            visible: widget.lighsInfo.isLedStripeActive != null ? true : false,
             child: AbsorbPointer(
               absorbing: !_isActiveDevice,
               child: Slider(

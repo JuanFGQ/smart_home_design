@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:smart_home_design/smart_home2/constants2.dart';
 import 'package:smart_home_design/smart_home2/data/scenarios_data.dart';
-import 'package:smart_home_design/smart_home2/pages/details2.dart';
 import 'package:smart_home_design/smart_home2/widgets/side_drawer.dart';
 import 'package:smart_home_design/smart_home2/widgets/weather_card.dart';
 import 'package:smart_home_design/smart_home2/widgets/zones_card.dart';
-
-import '../widgets/custom_appbar.dart';
 
 class Home2 extends StatefulWidget {
   const Home2({super.key});
@@ -26,9 +23,7 @@ class _Home2State extends State<Home2> {
         slivers: [
           const _CustomAppBar(),
           _Grettins(size: size),
-
           _WeatherCard(size: size),
-
           SliverList(
               delegate: SliverChildListDelegate([
             ListView.builder(
@@ -36,9 +31,8 @@ class _Home2State extends State<Home2> {
                 shrinkWrap: true,
                 itemCount: scenariosData.length,
                 itemBuilder: (context, index) =>
-                    Details2(data: scenariosData[index]))
+                    ZonesCard(data: scenariosData[index]))
           ])),
-          // const SliverAppBar(),
         ],
       ),
     );
@@ -55,13 +49,12 @@ class _Grettins extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SliverAppBar(
-      // bottom:
-      //     PreferredSize(child: SizedBox(), preferredSize: Size.fromHeight(32)),
+    return const SliverAppBar(
+      bottom:
+          PreferredSize(child: SizedBox(), preferredSize: Size.fromHeight(32)),
       pinned: true,
       backgroundColor: Colors.white,
-      // expandedHeight: size.height * 0.105,
-      flexibleSpace: const Column(
+      flexibleSpace: Column(
         children: [
           _UserGretting(),
         ],
@@ -196,5 +189,3 @@ class _UserGretting extends StatelessWidget {
     );
   }
 }
-
-//   
