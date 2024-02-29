@@ -18,7 +18,7 @@ class _Home2State extends State<Home2> {
     final size = MediaQuery.of(context).size;
     return Scaffold(
       drawer: const SideDrawer(),
-      backgroundColor: const Color.fromARGB(233, 255, 255, 255),
+      backgroundColor: Colors.white,
       body: CustomScrollView(
         slivers: [
           const _CustomAppBar(),
@@ -50,16 +50,10 @@ class _Grettins extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const SliverAppBar(
-      bottom:
-          PreferredSize(child: SizedBox(), preferredSize: Size.fromHeight(32)),
-      pinned: true,
-      backgroundColor: Colors.white,
-      flexibleSpace: Column(
-        children: [
-          _UserGretting(),
-        ],
-      ),
-    );
+        elevation: 0,
+        pinned: false,
+        backgroundColor: Colors.white,
+        flexibleSpace: _UserGretting());
   }
 }
 
@@ -73,14 +67,12 @@ class _WeatherCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SliverAppBar(
-        expandedHeight: size.height * 0.16,
+    return const SliverAppBar(
         backgroundColor: Colors.white,
         floating: true,
-        // ignore: prefer_const_constructors
         flexibleSpace: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: const Row(
+          padding: EdgeInsets.all(8.0),
+          child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               WeatherCard(
@@ -113,7 +105,7 @@ class _CustomAppBar extends StatelessWidget {
 
     return SliverAppBar(
       backgroundColor: Colors.white,
-      expandedHeight: size.height * 0.05,
+      // expandedHeight: size.height * 0.05,
       floating: true,
       leading: IconButton(
           icon: const Icon(
@@ -171,8 +163,8 @@ class _UserGretting extends StatelessWidget {
             ],
           ),
           MaterialButton(
-            minWidth: 70,
-            height: 40,
+            // minWidth: size.width * 0.09,
+            height: size.height * 0.06,
             elevation: 1,
             onPressed: () {},
             shape:

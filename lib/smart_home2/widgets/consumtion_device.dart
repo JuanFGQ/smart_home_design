@@ -44,9 +44,7 @@ class ConsumtionDevice extends StatelessWidget {
               ),
             ],
           ),
-          Divider(
-            thickness: 1.2,
-          )
+          Divider(thickness: 1.2)
         ],
       ),
     );

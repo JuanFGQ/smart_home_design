@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
-import 'package:smart_home_design/smart%20home%201/widgets/google_home_clone.dart';
 import 'package:smart_home_design/smart_home2/widgets/ac_mode_card.dart';
 
 import '../../widgets/custom_slider.dart';
@@ -40,9 +39,7 @@ class AirConditioner extends StatelessWidget {
                     color: Colors.grey,
                     fontSize: size.height * 0.018),
               ),
-              const SizedBox(
-                height: 10,
-              ),
+              const SizedBox(height: 10),
               Text(
                 mode,
                 style: TextStyle(

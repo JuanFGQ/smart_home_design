@@ -34,10 +34,10 @@ class ZonesCard extends StatelessWidget {
         index.getIndex = 0;
       },
       child: Container(
-        margin: const EdgeInsets.all(15),
+        margin: const EdgeInsets.only(left: 15, right: 15, bottom: 15),
         decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
         width: double.infinity,
-        height: size.height * 0.3,
+        height: size.height * 0.2,
         child: Stack(
           fit: StackFit.expand,
           children: [
@@ -124,8 +124,9 @@ class _InfoBox extends StatelessWidget {
       width: 200,
       // color: Colors.grey,
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: const Color.fromARGB(140, 111, 111, 111)),
+        borderRadius: BorderRadius.circular(10),
+        color: const Color.fromARGB(140, 111, 111, 111),
+      ),
       child: Row(
         children: [
           const Icon(

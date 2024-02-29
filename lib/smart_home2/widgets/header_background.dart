@@ -14,8 +14,8 @@ class BackGroundHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: double.infinity,
-      height: MediaQuery.of(context).size.height * 0.28,
+      // width: double.infinity,
+      // height: MediaQuery.of(context).size.height * 0.28,
       decoration: BoxDecoration(
           image: DecorationImage(
               image: AssetImage('assets/$image.png'), fit: BoxFit.cover)),

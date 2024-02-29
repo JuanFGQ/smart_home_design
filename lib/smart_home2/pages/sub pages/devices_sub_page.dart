@@ -11,16 +11,17 @@ class Devices extends StatelessWidget {
     // final size = MediaQuery.of(context).size;
     return Scaffold(
       body: GridView.builder(
-          scrollDirection: Axis.vertical,
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              mainAxisExtent: 220,
-              mainAxisSpacing: 0.5,
-              crossAxisCount: 2,
-              crossAxisSpacing: 0),
-          itemCount: devicesInfo.length,
-          itemBuilder: (context, index) => DevicesCard(
-                devices: devicesInfo[index],
-              )),
+        scrollDirection: Axis.vertical,
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            mainAxisExtent: 220,
+            mainAxisSpacing: 0.5,
+            crossAxisCount: 2,
+            crossAxisSpacing: 0),
+        itemCount: devicesInfo.length,
+        itemBuilder: (context, index) => DevicesCard(
+          devices: devicesInfo[index],
+        ),
+      ),
     );
   }
 }
