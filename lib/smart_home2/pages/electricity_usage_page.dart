@@ -75,7 +75,7 @@ class EnergyUsagePage extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                           fontSize: size.height * 0.025)),
                   Spacer(),
-                  MyCustomDropdownButton(month: 'today')
+                  const MyCustomDropdownButton(month: 'today')
                 ],
               ),
             ),

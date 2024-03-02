@@ -131,9 +131,9 @@ class CameraPage extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(
-                  width: size.width * 0.16,
-                  height: size.height * 0.16,
+                Spacer(),
+                Expanded(
+                  flex: 1,
                   child: FloatingActionButton(
                       heroTag: 'TAG2$media',
                       onPressed: () {},
@@ -142,9 +142,8 @@ class CameraPage extends StatelessWidget {
                           size: size.height * 0.04, color: Colors.white)),
                 ),
                 const SizedBox(width: 15),
-                SizedBox(
-                  width: size.width * 0.2,
-                  height: size.height * 0.2,
+                Expanded(
+                  flex: 2,
                   child: FloatingActionButton(
                     heroTag: 'TAG$media',
                     onPressed: () {},
@@ -154,9 +153,8 @@ class CameraPage extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: 15),
-                SizedBox(
-                  width: size.width * 0.16,
-                  height: size.height * 0.16,
+                Expanded(
+                  flex: 1,
                   child: FloatingActionButton(
                     heroTag: 'TAG3$media',
                     mini: false,
@@ -165,7 +163,8 @@ class CameraPage extends StatelessWidget {
                     child: Icon(Icons.volume_down_outlined,
                         size: size.height * 0.04, color: Colors.white),
                   ),
-                )
+                ),
+                Spacer()
               ],
             ),
           )

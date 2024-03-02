@@ -50,6 +50,7 @@ class _Grettins extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const SliverAppBar(
+        automaticallyImplyLeading: false,
         elevation: 0,
         pinned: false,
         backgroundColor: Colors.white,
@@ -68,6 +69,7 @@ class _WeatherCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const SliverAppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: Colors.white,
         floating: true,
         flexibleSpace: Padding(
@@ -104,6 +106,7 @@ class _CustomAppBar extends StatelessWidget {
     final size = MediaQuery.of(context).size;
 
     return SliverAppBar(
+      automaticallyImplyLeading: false,
       backgroundColor: Colors.white,
       // expandedHeight: size.height * 0.05,
       floating: true,
@@ -149,7 +152,7 @@ class _UserGretting extends StatelessWidget {
               Text(
                 'Hi MobileX',
                 style: TextStyle(
-                    fontSize: size.height * 0.038,
+                    fontSize: 20,
                     fontWeight: FontWeight.bold,
                     color: Colors.black),
               ),

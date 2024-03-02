@@ -25,15 +25,23 @@ class MyCustomDropdownButton extends StatelessWidget {
             itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
               const PopupMenuItem<String>(
                 value: 'opcion1',
-                child: Text('Opción 1'),
+                child: Text('Monday'),
               ),
               const PopupMenuItem<String>(
                 value: 'opcion2',
-                child: Text('Opción 2'),
+                child: Text('Tuesday'),
               ),
               const PopupMenuItem<String>(
                 value: 'opcion3',
-                child: Text('Opción 3'),
+                child: Text('Wednesday'),
+              ),
+              const PopupMenuItem<String>(
+                value: 'opcion3',
+                child: Text('Thrusday'),
+              ),
+              const PopupMenuItem<String>(
+                value: 'opcion3',
+                child: Text('Friday'),
               ),
             ],
           ),
